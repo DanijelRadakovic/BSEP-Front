@@ -1,0 +1,79 @@
+<div class="wrapper">
+  <app-navigation-bar></app-navigation-bar>
+  <div id="content">
+    <ng-container *ngIf="servers && servers.length; then serversExist; else serversNotExist"></ng-container>
+    <ng-template #serversExist>
+      <div class="row card-deck">
+
+        <div *ngFor="let server of servers" class="col-sm-4 mb-3 d-flex align-items-stretch">
+          <app-server-card [id]="server?.id" [name]="server?.name" [address]="server?.address" [type]="server?.type"
+            (deleteEvent)="delete($event)"></app-server-card>
+        </div>
+
+        <div class="col-sm-4 mb-3 d-flex align-items-stretch" (click)="open(content)">
+          <div class="card text-white bg-primary">
+            <div class="card-body">
+              <h4 class="card-title text-center">Add new server</h4>
+              <img class="card-img-top" [src]="addImage" alt="Add new">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </ng-template>
+    <ng-template #serversNotExist>
+      <h2>There are no server instances</h2>
+    </ng-template>
+
+    <ng-template #content let-modal>
+        <div class="modal-header text-white bg-primary">
+            <h4 class="modal-title" id="modal-basic-title">{{headerName}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formGroup">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="name">Name:</label>
+                  <input type="text" class="form-control" placeholder="NS-B-452-2G" formControlName="name" />
+                  <div *ngIf="name.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                    <span *ngIf="name.errors.minlength" class="text-danger">
+                      Server name must be at least 1 characters long!
+                    </span>
+                    <span *ngIf="name.errors.maxlength" class="text-danger">
+                      Server name must be maximum 30 characters long!
+                    </span>
+                    <span *ngIf="name.errors.required" class="text-danger">
+                      Server name is required!
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="type">Type: </label>
+                  <select class="dropdown-select form-control" formControlName="type">
+                    <option value="CA">CA</option>
+                    <option value="OCSP">OCSP</option>
+                  </select>
+                  <div *ngIf="type.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                    <span *ngIf="type.errors.required" class="text-danger"> Server type is required!</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="line">Address: </label>
+                  <input type="text" class="form-control" placeholder="127.0.0.1" formControlName="address"/>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success" (click)="onFormSubmit()">Create</button>
+          </div>
+    </ng-template>
+    
+
+  </div>
+</div>
