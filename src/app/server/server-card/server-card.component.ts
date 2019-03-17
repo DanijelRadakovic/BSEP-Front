@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Server } from 'selenium-webdriver/safari';
 import { ServerType } from 'src/model/enums/server-type.model';
+import { Router } from '@angular/router';
+import { Server } from 'src/model/server.model';
 
 
 @Component({
@@ -17,15 +18,17 @@ export class ServerCardComponent implements OnInit {
   @Input() address: string;
   @Input() type: ServerType;
   @Output() deleteEvent = new EventEmitter<number>();
-  private server: Server;
+  public server: Server;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.server = { id: this.id, name: this.name, address: this.address, type: this.type };
   }
 
-  connect(id: number) {
+  connect() {
+    this.router.navigate(['ca', this.name, 'conf'], { queryParams:
+      { server: this.name, address: this.address, type: this.type } });
   }
 
   delete(id: number) {

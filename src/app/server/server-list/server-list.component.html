@@ -6,8 +6,8 @@
       <div class="row card-deck">
 
         <div *ngFor="let server of servers" class="col-sm-4 mb-3 d-flex align-items-stretch">
-          <app-server-card [id]="server?.id" [name]="server?.name" [address]="server?.address" [type]="server?.type"
-            (deleteEvent)="delete($event)"></app-server-card>
+          <app-server-card [id]="server?.id" [name]="server?.name" [address]="server?.address" 
+          [type]="server?.type" (deleteEvent)="delete($event)"></app-server-card>
         </div>
 
         <div class="col-sm-4 mb-3 d-flex align-items-stretch" (click)="open(content)">
@@ -23,6 +23,14 @@
     </ng-template>
     <ng-template #serversNotExist>
       <h2>There are no server instances</h2>
+      <div class="col-sm-4 mb-3 d-flex align-items-stretch" (click)="open(content)">
+        <div class="card text-white bg-primary">
+          <div class="card-body">
+            <h4 class="card-title text-center">Add new server</h4>
+            <img class="card-img-top" [src]="addImage" alt="Add new">
+          </div>
+        </div>
+      </div>
     </ng-template>
 
     <ng-template #content let-modal>
@@ -37,7 +45,7 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="name">Name:</label>
-                  <input type="text" class="form-control" placeholder="NS-B-452-2G" formControlName="name" />
+                  <input type="text" class="form-control" formControlName="name" />
                   <div *ngIf="name.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
                     <span *ngIf="name.errors.minlength" class="text-danger">
                       Server name must be at least 1 characters long!

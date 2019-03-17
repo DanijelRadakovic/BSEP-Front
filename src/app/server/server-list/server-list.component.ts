@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ServerType } from 'src/model/enums/server-type.model';
 import { Server } from 'src/model/server.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ServerService } from 'src/app/core/service/server.service';
@@ -20,18 +19,12 @@ export class ServerListComponent implements OnInit {
   public formGroup: FormGroup;
 
   public addImage = 'assets/addServer.jpg';
-  public servers: Server[] = [
-    { id: 5, name: 'Root CA', address: 'https:example.com/slkdj', type: ServerType.CA },
-    { id: 5, name: 'London CA', address: 'https:example.com', type: ServerType.CA },
-    { id: 5, name: 'London CA', address: 'https:example.com', type: ServerType.CA },
-    { id: 5, name: 'London CA', address: 'https:example.com', type: ServerType.CA },
-    { id: 5, name: 'London CA', address: 'https:example.com', type: ServerType.CA },
-    { id: 5, name: 'London CA', address: 'https:example.com', type: ServerType.CA }
-  ];
+  public servers: Server[];
 
   constructor(private modalService: NgbModal,
     private serverService: ServerService,
     private toastrService: ToastrService) {
+    this.servers = [];
     this.isValidFormSubmitted = null;
     this.formGroup = new FormGroup({
       name: new FormControl('', [Validators.required,
@@ -47,10 +40,15 @@ export class ServerListComponent implements OnInit {
     this.serverService.findAll().subscribe(
       response => this.servers = response,
       err => this.toastrService.error(err));
+
   }
 
   delete(id: number) {
-    console.log('obrisi' + id);
+    this.serverService.remove(id).subscribe(
+      (response: string) => {
+        this.toastrService.success(response);
+        this.servers = this.servers.filter(server => server.id !== id);
+      }, (error: string) => this.toastrService.error(error));
   }
 
   open(content: any): void {

@@ -23,6 +23,11 @@ export class ServerService {
     return this.http.post<Server>(this.url, server).pipe(catchError(this.handleException));
   }
 
+  remove(id: number): Observable<{}> {
+    return this.http.delete(this.url + '/' + id, { responseType: 'text' as 'text' })
+      .pipe(catchError(this.handleException));
+  }
+
   private handleException(err: HttpErrorResponse): Observable<never> {
     return throwError(err.message);
   }

@@ -1,0 +1,33 @@
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h3>Arch Security</h3>
+  </div>
+
+  <ul class="list-unstyled components">
+    <li>
+      <a [routerLink]="['/server']">Servers</a>
+    </li>
+    <li>
+      <a [routerLink]="['/ca', serverName, 'gen']" 
+      [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">Generator</a>
+    </li>
+    <li>
+      <a [routerLink]="['/ca', serverName, 'cer']"
+      [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">Certificates</a>
+    </li>
+    <li>
+      <a [routerLink]="['/ca', serverName, 'trust']"
+      [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">Trust storage</a>
+    </li>
+    <li>
+      <a [routerLink]="['/ca', serverName, 'conf']"
+      [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">{{serverName}}</a>
+    </li>
+  </ul>
+
+  <ul class="list-unstyled CTAs">
+    <!-- <li *ngIf="userService.isAuthenticated()">
+          <a [routerLink]="" class="logout" (click)="logout()">Log Out</a>
+      </li> -->
+  </ul>
+</nav>
