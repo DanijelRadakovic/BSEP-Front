@@ -1,6 +1,63 @@
 <div class="wrapper">
-  <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress"
-  [serverType]="serverType"></app-ca-nav-bar>
+  <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress" [serverType]="serverType"></app-ca-nav-bar>
   <div id="content">
-    neki trust storage
+    <ng-container *ngIf="certificates && certificates.length; then certificatesExist; else certificatesNotExist">
+    </ng-container>
+    <ng-template #certificatesExist>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Serial Number</th>
+            <th scope="col">Distinguished Name</th>
+            <th scope="col">Active</th>
+            <th scope="col">Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cer of certificates">
+            <th scope="row">{{cer.serialNumber}}</th>
+            <td>{{cer.distinguishedName}}</td>
+            <td>{{cer.active}}</td>
+            <td><button class="btn btn-primary" (click)="getTrustStorage(cer.serialNumber)">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+    <ng-template #certificatesNotExist>
+      <h2>There are no certificates</h2>
+    </ng-template>
+
+    <div *ngIf="trustStorage">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Serial Number</th>
+            <th scope="col">Distinguished Name</th>
+            <th scope="col">Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ts of trustStorage">
+            <th scope="row">{{ts.serialNumber}}</th>
+            <td>{{ts.distinguishedName}}</td>
+            <td><button class="btn btn-primary" (click)="removeItem(ts.serialNumber)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <form [formGroup]="formGroup">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="type">Serial number:</label>
+              <input type="text" class="form-control" formControlName="serialNumber" />
+              <div *ngIf="serialNumber.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                <span *ngIf="serialNumber.errors.required" class="text-danger"> Serial number is required!</span>
+              </div>
+              <button class="btn btn-primary" 
+                  (click)="addItem()">Add</button>
+            </div>
+          </div>
+        </form>
+      <button class="btn btn-primary" (click)="update()">Submit</button>
+      
+    </div>
   </div>

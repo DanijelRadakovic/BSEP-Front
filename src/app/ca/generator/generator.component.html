@@ -2,5 +2,56 @@
   <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress"
   [serverType]="serverType"></app-ca-nav-bar>
   <div id="content">
-    
+      <form [formGroup]="formGroup">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="type">Common name: </label>
+              <input type="text" class="form-control" formControlName="commonName" />
+              <div *ngIf="commonName.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                <span *ngIf="commonName.errors.required" class="text-danger"> Common name is required!</span>
+              </div>
+
+              <label for="type">Oranization: </label>
+              <input type="text" class="form-control" formControlName="organization" />
+              <div *ngIf="organization.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                <span *ngIf="organization.errors.required" class="text-danger"> Organization is required!</span>
+              </div>
+
+              <label for="type">Oranization unit: </label>
+              <input type="text" class="form-control" formControlName="organizationUnit" />
+              <div *ngIf="organizationUnit.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                <span *ngIf="organizationUnit.errors.required" class="text-danger"> Organization unit is required!</span>
+              </div>
+
+              <label for="type">Country: </label>
+              <input type="text" class="form-control" formControlName="country" />
+              <div *ngIf="country.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+                <span *ngIf="country.errors.required" class="text-danger"> Country is required!</span>
+              </div>
+
+              <label for="type">UID: </label>
+              <input type="text" class="form-control" formControlName="uid" />
+
+              <label for="type">Type: </label>
+              <select class="dropdown-select form-control" formControlName="type">
+                <option value="ROOT">ROOT</option>
+                <option value="INTERMEDIATE">INTERMEDIATE</option>
+                <option value="USER">USER</option>
+              </select>
+
+              <label for="type">Issuer: </label>
+              
+              <select class="dropdown-select form-control" formControlName="issuer">
+                  <option *ngFor="let cer of certificates" [ngValue]="cer.serialNumber">
+                    {{cer.serialNumber}} {{cer.distinguishedName}}</option>
+              </select>
+
+              <label for="type">Destination: </label>
+              <input type="text" class="form-control" formControlName="destination" />
+              
+              <button class="btn btn-primary" (click)="generate()">Generate</button>
+              
+            </div>
+          </div>
+        </form>
   </div>
