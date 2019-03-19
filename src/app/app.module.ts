@@ -10,10 +10,12 @@ import { ServerModule } from './server/server.module';
 import { CaModule } from './ca/ca.module';
 import { UserModule } from './user/user.module';
 import { CoreModule } from './core/core.module';
+import { CertificateTableComponent } from './certificate/certificate-table/certificate-table.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CertificateTableComponent
   ],
   imports: [
     BrowserModule,
