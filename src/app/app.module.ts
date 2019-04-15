@@ -10,6 +10,7 @@ import { ServerModule } from './server/server.module';
 import { CaModule } from './ca/ca.module';
 import { UserModule } from './user/user.module';
 import { CoreModule } from './core/core.module';
+import { ModelModule } from './model/model.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CoreModule } from './core/core.module';
     SharedModule,
     ServerModule,
     CaModule,
-    UserModule
+    UserModule,
+    ModelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

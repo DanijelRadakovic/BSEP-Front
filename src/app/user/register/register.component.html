@@ -1,0 +1,19 @@
+<div>
+  <div>
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" placeholder="Enter username">
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Enter username">    
+  </div>
+  <div>
+    <label for="type">User type</label><br>
+    <select name="type" [(ngModel)]="type">
+      <option>Admin</option>
+      <option>Operator</option>
+  </select>
+  </div>
+  <br>
+  <button align="center" (click)="register()" class="btn btn-primary">Sign Up</button>
+</div>

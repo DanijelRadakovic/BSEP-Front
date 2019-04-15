@@ -1,4 +1,16 @@
-<label>Username: </label>
-<input type="text" />
-<label>Password: </label>
-<input type="text">
+<div class="container">
+    <div class="card card-container">
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin">
+
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="email" id="inputEmail" class="form-control" [ngModelOptions]="{standalone: true}" placeholder="Email address" [(ngModel)]="username" required autofocus>
+            <input type="password" id="inputPassword" class="form-control" [ngModelOptions]="{standalone: true}" placeholder="Password" [(ngModel)]="password" required>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" (click)="login()">Sign in</button>
+        </form><!-- /form -->
+        <a href="#" class="forgot-password">
+            Forgot the password?
+        </a>
+    </div><!-- /card-container -->
+</div><!-- /container -->
