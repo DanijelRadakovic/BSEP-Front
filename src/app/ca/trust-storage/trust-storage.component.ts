@@ -51,7 +51,7 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
         this.serverType = params['type'] || '';
       });
 
-    this.certificateService.findAll().subscribe(
+    this.certificateService.getAll().subscribe(
       response => this.certificates = response,
       err => this.toastrService.error(err));
   }

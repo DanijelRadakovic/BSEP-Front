@@ -1,3 +1,99 @@
+
+.example-container {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+  }
+
+.mat-table{
+    align-self: center;
+}
+
+.mat-success {
+    background-color: rgb(35, 140, 189);
+    color: #fff;
+}
+
+.mat-add {
+    background-color: rgb(252, 8, 8);
+    color: #fff;
+}
+
+.mat-table__wrapper .mat-table {
+    min-width: auto;
+    width: 100% ;
+}
+
+.mat-header-row {
+    width: 100%;
+}
+
+.mat-header-row th{
+    text-align: center;
+}
+
+.mat-row {
+    width: 100%;
+}
+
+.mat-column-distinguishedName{
+    flex: 0 0 25% !important;
+    min-width: 140px !important;
+}
+
+.mat-column-serialNumber {
+    flex: 0 0 25% !important;
+    min-width: 140px !important;
+}
+
+.mat-column-active {
+    flex: 0 0 25% !important;
+    min-width: 140px !important;
+}
+
+.mat-column-revoke {
+    flex: 0 0 25% !important;
+    min-width: 180px !important;
+}
+
+.mat-column-docs {
+    flex: 0 0 25% !important;
+    min-width: 180px !important;
+}
+.mat-column-change {
+    flex: 0 0 25% !important;
+    min-width: 104px !important;
+}
+
+.mat-app-background{
+    text-align: center;
+}
+
+#mainDiv{
+    text-align: center;
+    margin-top: 40px;
+}
+
+   
+.full-width {
+    width: 100%;
+}
+
+
+mat-toolbar{
+    margin-bottom: 40px;
+}
+
+
+h1{
+    margin-bottom: 40px;
+  }
+
+th{
+    margin: 30px;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */

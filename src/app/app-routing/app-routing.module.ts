@@ -13,6 +13,7 @@ import { TrustStorageComponent } from '../ca/trust-storage/trust-storage.compone
 
 const routes: Routes = [
   { path: 'server', component: ServerListComponent, canActivate: [IsSecurityAdminGuard] },
+  { path: 'certificates', component: CertificateListComponent, canActivate: [IsSecurityAdminGuard] },
   { path: 'ca/:id/gen', component: GeneratorComponent},
   { path: 'ca/:id/cer', component: CertificateListComponent},
   { path: 'ca/:id/conf', component: ConfigComponent},
