@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/core/service/user.service';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  private username: string;
+  private password: string;
+
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
+  }
+
+  login(): void {
+    if (this.username !== undefined && this.password !== undefined) {
+      this.userService.login({'username': this.username, 'password': this.password}).subscribe(
+        result => {
+          console.log('Jeee ulogovao se');
+        }
+      );
+    }
   }
 
 }
