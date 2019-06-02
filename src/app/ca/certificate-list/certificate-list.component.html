@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <app-navigation-bar></app-navigation-bar>
+  <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress" [serverType]="serverType"></app-ca-nav-bar>
   <div id="content">
     <h1>Certificates</h1>
     <h3 *ngIf="certificates.length == 0">There is not a single certificate in your system</h3>
@@ -39,8 +39,6 @@
         </table>
       
       </div>
-
-      
     </div>
   </div>
 </div>

@@ -21,8 +21,8 @@ export class TrustService {
     return this.http.get<Certificate[]>(this.url + '/' + serialNumber).pipe(catchError(this.handleException));
   }
 
-  updateStorage(request: TrustStorage): Observable<{}> {
-    return this.http.post<{}>(this.url, request).pipe(catchError(this.handleException));
+  updateStorage(request: TrustStorage): Observable<String> {
+    return this.http.post(this.url, request, { responseType: 'text' }).pipe(catchError(this.handleException));
   }
 
   private handleException(err: HttpErrorResponse): Observable<never> {

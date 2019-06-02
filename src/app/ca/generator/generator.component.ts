@@ -104,7 +104,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
         this.serverType = params['type'] || '';
       });
 
-    this.certificateService.getAll().subscribe(
+    this.certificateService.getAllActiveCA().subscribe(
       response => this.certificates = response,
       err => this.toastrService.error(err));
   }

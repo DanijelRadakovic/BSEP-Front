@@ -4,27 +4,26 @@
     <ng-container *ngIf="certificates && certificates.length; then certificatesExist; else certificatesNotExist">
     </ng-container>
     <ng-template #certificatesExist>
+      <h3>Client certificates</h3>
       <table class="table">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Serial Number</th>
             <th scope="col">Distinguished Name</th>
-            <th scope="col">Active</th>
             <th scope="col">Option</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cer of certificates">
+          <tr *ngFor="let cer of clientCertificates">
             <th scope="row">{{cer.serialNumber}}</th>
             <td>{{cer.distinguishedName}}</td>
-            <td>{{cer.active}}</td>
             <td><button class="btn btn-primary" (click)="getTrustStorage(cer.serialNumber)">Edit</button></td>
           </tr>
         </tbody>
       </table>
     </ng-template>
     <ng-template #certificatesNotExist>
-      <h2>There are no certificates</h2>
+      <h2>There are no client certificates</h2>
     </ng-template>
 
     <div *ngIf="trustStorage">
@@ -45,19 +44,22 @@
         </tbody>
       </table>
       <form [formGroup]="formGroup">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="type">Serial number:</label>
-              <input type="text" class="form-control" formControlName="serialNumber" />
-              <div *ngIf="serialNumber.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
-                <span *ngIf="serialNumber.errors.required" class="text-danger"> Serial number is required!</span>
-              </div>
-              <button class="btn btn-primary" 
-                  (click)="addItem()">Add</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="type">Certificate: </label>
+            <select class="dropdown-select form-control" formControlName="cert">
+              <option *ngFor="let cer of certificates" [ngValue]="cer.serialNumber">
+                {{cer.serialNumber}} {{cer.distinguishedName}}</option>
+            </select>
+            <div *ngIf="cert.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+              <span *ngIf="cert.errors.required" class="text-danger"> Certificate is required!</span>
             </div>
+            <br />
+            <button class="btn btn-primary" (click)="addItem()">Add</button>
           </div>
-        </form>
+        </div>
+      </form>
       <button class="btn btn-primary" (click)="update()">Submit</button>
-      
+
     </div>
   </div>

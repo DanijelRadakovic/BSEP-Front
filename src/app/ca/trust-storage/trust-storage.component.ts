@@ -21,8 +21,10 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
   public serverAddress: string;
   public serverType: string;
 
+  private clientCertificates: Certificate[];
   private certificates: Certificate[];
   private trustStorage: Certificate[];
+  private availableCerts: Certificate[];
 
   private target: string;
 
@@ -40,7 +42,7 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.formGroup = new FormGroup({
-      serialNumber: new FormControl('', [Validators.required]),
+      cert: new FormControl('', [Validators.required]),
     });
 
     this.sub = this.route
@@ -51,7 +53,11 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
         this.serverType = params['type'] || '';
       });
 
-    this.certificateService.getAll().subscribe(
+    this.certificateService.getAllActiveClients().subscribe(
+      response => this.clientCertificates = response,
+      err => this.toastrService.error(err));
+
+    this.certificateService.getAllActive().subscribe(
       response => this.certificates = response,
       err => this.toastrService.error(err));
   }
@@ -59,25 +65,41 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
   getTrustStorage(serialNumber: string) {
     this.target = serialNumber;
     this.trustStoreService.findTrustStorage(serialNumber).subscribe(
-      response => this.trustStorage = response,
-      err => this.trustStorage = []);
+      response => {
+        this.trustStorage = response;
+        if (this.trustStorage.length === 0) {
+          this.availableCerts = this.certificates;
+        } else {
+          this.availableCerts = this.certificates.filter(c => !this.trustStorage.includes(c));
+        }
+        this.availableCerts.splice(this.availableCerts.findIndex(c => c.serialNumber === serialNumber), 1);
+      },
+      () => {
+        this.trustStorage = [];
+        this.availableCerts = this.certificates;
+        this.availableCerts.splice(this.availableCerts.findIndex(c => c.serialNumber === serialNumber), 1);
+      });
   }
 
   removeItem(serialNumber: string) {
+    this.availableCerts.push(this.trustStorage.find(c => c.serialNumber === serialNumber));
     this.trustStorage = this.trustStorage.filter(s => s.serialNumber !== serialNumber);
   }
 
   addItem() {
-    this.isValidFormSubmitted = false;
-    if (this.formGroup.invalid) {
-      return;
-    }
-    this.isValidFormSubmitted = true;
-    this.certificates.forEach(c => {
-      if (c.serialNumber === this.serialNumber.value) {
+    for (let index = 0; index < this.availableCerts.length; index++) {
+      const c = this.availableCerts[index];
+      if (c.serialNumber === this.cert.value) {
         this.trustStorage.push(c);
+        this.availableCerts.splice(index, 1);
+        if (this.availableCerts.length === 0) {
+          this.cert.setValue('');
+        } else {
+          this.cert.setValue(this.availableCerts[0].serialNumber);
+        }
+        break;
       }
-    });
+    }
   }
 
   update() {
@@ -85,16 +107,16 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
     this.trustStorage.forEach(cer => { sn.push(cer.serialNumber); });
     const request: TrustStorage = { target: this.target, serialNumbers: sn };
     this.trustStoreService.updateStorage(request).subscribe(
-      response => this.toastrService.success('Successfully updated storage'),
-      err => this.toastrService.success('Successfully updated storage'));
+      () => this.toastrService.success('Successfully updated storage'),
+      err => this.toastrService.error(err));
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  private get serialNumber() {
-    return this.formGroup.get('serialNumber');
+  private get cert() {
+    return this.formGroup.get('cert');
   }
 
 }

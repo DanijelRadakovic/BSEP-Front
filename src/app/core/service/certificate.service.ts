@@ -16,12 +16,28 @@ export class CertificateService {
   constructor(private http: HttpClient) {
   }
 
-  findAll(): Observable<Certificate[]> {
-    return this.http.get<Certificate[]>(this.url + '/findAll').pipe(catchError(this.handleException));
-  }
-
   getAll(): Observable<Certificate[]> {
     return this.http.get<Certificate[]>(this.url).pipe(catchError(this.handleException));
+  }
+
+  getAllActive(): Observable<Certificate[]> {
+    return this.http.get<Certificate[]>(this.url + '/active').pipe(catchError(this.handleException));
+  }
+
+  getAllCA(): Observable<Certificate[]> {
+    return this.http.get<Certificate[]>(this.url + '/ca').pipe(catchError(this.handleException));
+  }
+
+  getAllActiveCA(): Observable<Certificate[]> {
+    return this.http.get<Certificate[]>(this.url + '/ca/active').pipe(catchError(this.handleException));
+  }
+
+  getAllClients(): Observable<Certificate[]> {
+    return this.http.get<Certificate[]>(this.url + '/client').pipe(catchError(this.handleException));
+  }
+
+  getAllActiveClients(): Observable<Certificate[]> {
+    return this.http.get<Certificate[]>(this.url + '/client/active').pipe(catchError(this.handleException));
   }
 
   create(request: CertificateRequest): Observable<String> {
@@ -30,7 +46,7 @@ export class CertificateService {
 
 
   remove(id: number): Observable<String> {
-    return this.http.delete(this.url + '/remove/' + id, { responseType: 'text' })
+    return this.http.delete(this.url + '/' + id, { responseType: 'text' })
       .pipe(catchError(this.handleException));
   }
 

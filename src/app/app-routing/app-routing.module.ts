@@ -7,7 +7,6 @@ import { IsBackupAdminGuard } from './is-backup-admin.guard';
 import { ServerListComponent } from '../server/server-list/server-list.component';
 import { AuthComponent } from '../user/auth/auth.component';
 import { GeneratorComponent } from '../ca/generator/generator.component';
-import { ConfigComponent } from '../ca/config/config.component';
 import { CertificateListComponent } from '../ca/certificate-list/certificate-list.component';
 import { TrustStorageComponent } from '../ca/trust-storage/trust-storage.component';
 import { RegisterComponent } from '../user/register/register.component';
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: 'server', component: ServerListComponent, canActivate: [IsSecurityAdminGuard] },
   { path: 'cer', component: CertificateListComponent, canActivate: [IsSecurityAdminGuard] },
   { path: 'gen', component: GeneratorComponent},
-  { path: 'conf', component: ConfigComponent},
   { path: 'trust', component: TrustStorageComponent},
   { path: 'register', component: RegisterComponent},
   { path: '', redirectTo: '/auth', pathMatch: 'full' },

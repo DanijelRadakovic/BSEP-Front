@@ -17,12 +17,12 @@ export class CertificateListComponent implements OnInit, OnDestroy {
   public serverAddress: string;
   public serverType: string;
 
-  displayedColumns: string[] = ['distinguishedName', 'serialNumber', 'active', 'revoke']
+  displayedColumns: string[] = ['distinguishedName', 'serialNumber', 'active', 'revoke'];
   private certificates: Certificate[] = [];
-  dataSource : any[];
+  dataSource: any[];
 
   constructor(private route: ActivatedRoute, private certificateService: CertificateService,
-     private toastrService: ToastrService,
+    private toastrService: ToastrService,
     private router: Router) { }
 
   ngOnInit() {
@@ -34,33 +34,22 @@ export class CertificateListComponent implements OnInit, OnDestroy {
         this.serverType = params['type'] || '';
       });
 
-      this.certificateService.findAll().subscribe(
-        response => {
-          this.certificates = response;
-          this.certificates.forEach(element => {
-            console.log(element);
-          });
-        },
-        err => this.toastrService.error(err));
-  
+    this.certificateService.getAll().subscribe(
+      response => this.certificates = response,
+      err => this.toastrService.error(err));
+
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  revokeCertificate(certificate: Certificate){
-    console.log(certificate.id);
+  revokeCertificate(certificate: Certificate) {
     this.certificateService.remove(certificate.id).subscribe(
-      response => {
+      () => {
         certificate.active = false;
-        // var index = this.certificates.indexOf(certificate);
-        // const copiedData =  this.certificates.slice();
-        // copiedData.splice(index, 1);
-        // this.certificates = copiedData;
-        // this.toastr.info("Certificate succesfully revoked!")
-      },
-      err => this.toastrService.error(err));
+        this.toastrService.success('Certificate successfully revoked');
+      }, err => this.toastrService.error(err));
   }
 
 }
