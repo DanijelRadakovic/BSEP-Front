@@ -1,57 +1,125 @@
 <div class="wrapper">
-  <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress"
-  [serverType]="serverType"></app-ca-nav-bar>
+  <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress" [serverType]="serverType"></app-ca-nav-bar>
   <div id="content">
-      <form [formGroup]="formGroup">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="type">Common name: </label>
-              <input type="text" class="form-control" formControlName="commonName" />
-              <div *ngIf="commonName.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
-                <span *ngIf="commonName.errors.required" class="text-danger"> Common name is required!</span>
-              </div>
-
-              <label for="type">Oranization: </label>
-              <input type="text" class="form-control" formControlName="organization" />
-              <div *ngIf="organization.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
-                <span *ngIf="organization.errors.required" class="text-danger"> Organization is required!</span>
-              </div>
-
-              <label for="type">Oranization unit: </label>
-              <input type="text" class="form-control" formControlName="organizationUnit" />
-              <div *ngIf="organizationUnit.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
-                <span *ngIf="organizationUnit.errors.required" class="text-danger"> Organization unit is required!</span>
-              </div>
-
-              <label for="type">Country: </label>
-              <input type="text" class="form-control" formControlName="country" />
-              <div *ngIf="country.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
-                <span *ngIf="country.errors.required" class="text-danger"> Country is required!</span>
-              </div>
-
-              <label for="type">UID: </label>
-              <input type="text" class="form-control" formControlName="uid" />
-
-              <label for="type">Type: </label>
-              <select class="dropdown-select form-control" formControlName="type">
-                <option value="ROOT">ROOT</option>
-                <option value="INTERMEDIATE">INTERMEDIATE</option>
-                <option value="USER">USER</option>
-              </select>
-
-              <label for="type">Issuer: </label>
-              
-              <select class="dropdown-select form-control" formControlName="issuer">
-                  <option *ngFor="let cer of certificates" [ngValue]="cer.serialNumber">
-                    {{cer.serialNumber}} {{cer.distinguishedName}}</option>
-              </select>
-
-              <label for="type">Destination: </label>
-              <input type="text" class="form-control" formControlName="destination" />
-              
-              <button class="btn btn-primary" (click)="generate()">Generate</button>
-              
-            </div>
+    <form [formGroup]="formGroup">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="type">Common name: </label>
+          <input type="text" class="form-control" formControlName="commonName" />
+          <div *ngIf="commonName.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="commonName.errors.required" class="text-danger"> Common name is required!</span>
           </div>
-        </form>
+
+          <label for="type">Oranization: </label>
+          <input type="text" class="form-control" formControlName="organization" />
+          <div *ngIf="organization.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="organization.errors.required" class="text-danger"> Invalid value! Enter value beetween 1 and 64
+              characters!</span>
+          </div>
+
+          <label for="type">Country: </label>
+          <select class="dropdown-select form-control" formControlName="country">
+            <option value="" disabled>Choose your country</option>
+            <option *ngFor="let country of countries" [ngValue]="country">{{country}}</option>
+          </select>
+
+          <label for="type">Oranization unit: </label>
+          <input type="text" class="form-control" formControlName="organizationUnit" />
+          <div *ngIf="organizationUnit.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="organizationUnit.errors?.minlength || organizationUnit.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 64 characters!</span>
+          </div>
+
+          <label for="type">Surname: </label>
+          <input type="text" class="form-control" formControlName="surname" />
+          <div *ngIf="surname.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="surname.errors?.minlength || surname.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 64 characters!</span>
+          </div>
+
+          <label for="type">Given name: </label>
+          <input type="text" class="form-control" formControlName="givenName" />
+          <div *ngIf="givenName.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="givenName.errors?.minlength || givenName.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 64 characters!</span>
+          </div>
+
+          <label for="type">Gender: </label>
+          <select class="dropdown-select form-control" formControlName="gender">
+            <option value="" disabled>Choose your gender</option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+
+          <label for="type">Email: </label>
+          <input type="text" class="form-control" formControlName="email" />
+          <div *ngIf="email.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="email.errors?.minlength || email.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 128 characters!</span>
+            <span *ngIf="email.errors?.email" class="text-danger"> Invalid email value!</span>
+          </div>
+
+          <label for="type">Place of birth: </label>
+          <input type="text" class="form-control" formControlName="placeOfBirth" />
+          <div *ngIf="placeOfBirth.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="placeOfBirth.errors?.minlength || placeOfBirth.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 128 characters!</span>
+          </div>
+
+          <label for="type">Street: </label>
+          <input type="text" class="form-control" formControlName="street" />
+          <div *ngIf="street.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="street.errors?.minlength || street.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 64 characters!</span>
+          </div>
+
+          <label for="type">Locality name: </label>
+          <input type="text" class="form-control" formControlName="localityName" />
+          <div *ngIf="localityName.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="localityName.errors?.minlength || localityName.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 64 characters!</span>
+          </div>
+
+          <label for="type">Postal code: </label>
+          <input type="text" class="form-control" formControlName="postalCode" />
+          <div *ngIf="postalCode.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="postalCode.errors?.minlength || postalCode.errors?.maxlength" class="text-danger">
+              Invalid value length! Enter value beetween 1 and 40 characters!</span>
+          </div>
+
+          <label for="type">Country of citizenship: </label>
+          <select class="dropdown-select form-control" formControlName="countryOfCitizenship">
+            <option value="" disabled>Choose your country</option>
+            <option *ngFor="let country of countries" [ngValue]="country">{{country}}</option>
+          </select>
+
+          <label for="type">Country of residence: </label>
+          <select class="dropdown-select form-control" formControlName="countryOfResidence">
+            <option value="" disabled>Choose your country</option>
+            <option *ngFor="let country of countries" [ngValue]="country">{{country}}</option>
+          </select>
+
+          <label for="type">Type: </label>
+          <select class="dropdown-select form-control" formControlName="type" (change)="changeType($event)">
+            <option value="ROOT">ROOT</option>
+            <option value="INTERMEDIATE">INTERMEDIATE</option>
+            <option value="CLIENT">CLIENT</option>
+          </select>
+
+          <div *ngIf="showIssuer">
+            <label for="type">Issuer: </label>
+            <select class="dropdown-select form-control" formControlName="issuer">
+              <option *ngFor="let cer of certificates" [ngValue]="cer.serialNumber">
+                {{cer.serialNumber}} {{cer.distinguishedName}}</option>
+            </select>
+          </div>
+
+
+          <br />
+
+          <button class="btn btn-primary" (click)="generate()">Generate</button>
+
+        </div>
+      </div>
+    </form>
   </div>

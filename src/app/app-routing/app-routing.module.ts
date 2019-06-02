@@ -14,11 +14,10 @@ import { RegisterComponent } from '../user/register/register.component';
 
 const routes: Routes = [
   { path: 'server', component: ServerListComponent, canActivate: [IsSecurityAdminGuard] },
-  { path: 'certificates', component: CertificateListComponent, canActivate: [IsSecurityAdminGuard] },
-  { path: 'ca/:id/gen', component: GeneratorComponent},
-  { path: 'ca/:id/cer', component: CertificateListComponent},
-  { path: 'ca/:id/conf', component: ConfigComponent},
-  { path: 'ca/:id/trust', component: TrustStorageComponent},
+  { path: 'cer', component: CertificateListComponent, canActivate: [IsSecurityAdminGuard] },
+  { path: 'gen', component: GeneratorComponent},
+  { path: 'conf', component: ConfigComponent},
+  { path: 'trust', component: TrustStorageComponent},
   { path: 'register', component: RegisterComponent},
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
   { path: '**', component: AuthComponent, pathMatch: 'full' }

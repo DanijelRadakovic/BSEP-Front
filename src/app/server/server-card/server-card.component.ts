@@ -27,8 +27,11 @@ export class ServerCardComponent implements OnInit {
   }
 
   connect() {
-    this.router.navigate(['ca', this.name, 'conf'], { queryParams:
-      { server: this.name, address: this.address, type: this.type } });
+    window.location.href = 'http://' + this.address + '?server=' + this.name +
+     '&address=' + this.address + '&type=' + this.type;
+    // window.open('http://' + this.address, '_blank');
+    // this.router.navigate(['ca', this.name, 'conf'], { queryParams:
+    //   { server: this.name, address: this.address, type: this.type } });
   }
 
   delete(id: number) {

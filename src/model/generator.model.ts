@@ -1,13 +1,24 @@
+import { CerType } from './enums/cer-type.model';
 
-export interface Generator {
-    x500Name: string;
-    server: string;
-    issuer: Issuer;
-    destination: string;
-    type: string;
+export interface CertificateRequest {
+    subjectDN: SubjectDN;
+    issuerSN: String;
+    type: CerType;
 }
 
-export interface Issuer {
-    serialNumber: string;
-    x500Name: string;
+export interface SubjectDN {
+    commonName: String;
+    organization: String;
+    country: String;
+    organizationUnit: String;
+    surname: String;
+    givenName: String;
+    gender: String;
+    email: String;
+    placeOfBirth: String;
+    street: String;
+    localityName: String;
+    postalCode: String;
+    countryOfCitizenship: String;
+    countryOfResidence: String;
 }

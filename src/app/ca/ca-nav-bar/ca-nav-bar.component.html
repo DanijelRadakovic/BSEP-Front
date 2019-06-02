@@ -1,6 +1,7 @@
 <nav id="sidebar">
   <div class="sidebar-header">
     <h3>Arch Security</h3>
+    <h5>{{serverName}} - {{serverType}}</h5>
   </div>
 
   <ul class="list-unstyled components">
@@ -8,20 +9,16 @@
       <a [routerLink]="['/server']">Servers</a>
     </li>
     <li>
-      <a [routerLink]="['/ca', serverName, 'gen']" 
+      <a [routerLink]="['/gen']" 
       [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">Generator</a>
     </li>
     <li>
-      <a [routerLink]="['/ca', serverName, 'cer']"
+      <a [routerLink]="['/cer']"
       [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">Certificates</a>
     </li>
     <li>
-      <a [routerLink]="['/ca', serverName, 'trust']"
+      <a [routerLink]="['/trust']"
       [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">Trust storage</a>
-    </li>
-    <li>
-      <a [routerLink]="['/ca', serverName, 'conf']"
-      [queryParams]="{ server: serverName, address: serverAddress, type: serverType }">{{serverName}}</a>
     </li>
   </ul>
 

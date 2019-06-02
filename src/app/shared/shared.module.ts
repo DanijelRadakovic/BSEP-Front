@@ -8,7 +8,7 @@ import { MatCheckboxModule, MatCardModule, MatDatepickerModule, MatNativeDateMod
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { ScrollingModule, ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -38,7 +38,6 @@ import { ScrollingModule, ScrollDispatchModule } from '@angular/cdk/scrolling';
     MatSelectModule,
     MatSortModule,
     MatTableModule,
-    ScrollDispatchModule,
     CommonModule,
     RouterModule,
     FormsModule,
