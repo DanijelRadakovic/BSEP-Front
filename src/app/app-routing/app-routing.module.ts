@@ -10,6 +10,7 @@ import { GeneratorComponent } from '../ca/generator/generator.component';
 import { CertificateListComponent } from '../ca/certificate-list/certificate-list.component';
 import { TrustStorageComponent } from '../ca/trust-storage/trust-storage.component';
 import { RegisterComponent } from '../user/register/register.component';
+import { DistributionComponent } from '../ca/distribution/distribution.component';
 
 const routes: Routes = [
   { path: 'server', component: ServerListComponent, canActivate: [IsSecurityAdminGuard] },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'gen', component: GeneratorComponent},
   { path: 'trust', component: TrustStorageComponent},
   { path: 'register', component: RegisterComponent},
-  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  { path: 'dist', component: DistributionComponent},
+  { path: '', redirectTo: '/server', pathMatch: 'full' },
   { path: '**', component: AuthComponent, pathMatch: 'full' }
 ];
 

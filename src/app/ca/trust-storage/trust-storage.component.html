@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <app-ca-nav-bar [serverName]="serverName" [serverAddress]="serverAddress" [serverType]="serverType"></app-ca-nav-bar>
+    <app-navigation-bar></app-navigation-bar>
   <div id="content">
     <ng-container *ngIf="certificates && certificates.length; then certificatesExist; else certificatesNotExist">
     </ng-container>
@@ -48,7 +48,7 @@
           <div class="form-group">
             <label for="type">Certificate: </label>
             <select class="dropdown-select form-control" formControlName="cert">
-              <option *ngFor="let cer of certificates" [ngValue]="cer.serialNumber">
+              <option *ngFor="let cer of availableCerts" [ngValue]="cer.serialNumber">
                 {{cer.serialNumber}} {{cer.distinguishedName}}</option>
             </select>
             <div *ngIf="cert.errors && isValidFormSubmitted != null && !isValidFormSubmitted">

@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <app-navigation-bar></app-navigation-bar>
+  <div id="content">
+    <form [formGroup]="formGroup">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="type">Certificate: </label>
+          <select class="dropdown-select form-control" formControlName="certificate">
+            <option *ngFor="let cer of certificates" [ngValue]="cer.serialNumber">
+              {{cer.serialNumber}} {{cer.distinguishedName}}</option>
+          </select>
+
+          <label for="type">Hostname: </label>
+          <input type="text" class="form-control" formControlName="hostname" />
+          <div *ngIf="hostname.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="hostname.errors.required" class="text-danger"> Hostname is required!</span>
+          </div>
+
+          <label for="type">Destination: </label>
+          <input type="text" class="form-control" formControlName="destination" />
+          <div *ngIf="destination.errors && isValidFormSubmitted != null && !isValidFormSubmitted">
+            <span *ngIf="destination.errors.required" class="text-danger"> Destination is required!</span>
+          </div>
+          
+          <br/>
+          
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Private key</th>
+                <th scope="col">Keystore</th>
+                <th scope="col">Truststore</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" class="form-control" formControlName="privateKey" /></td>
+                <td><input type="checkbox" class="form-control" formControlName="keystore" /></td>
+                <td><input type="checkbox" class="form-control" formControlName="truststore" /></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br />
+
+          <button class="btn btn-primary" (click)="send()">Send</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

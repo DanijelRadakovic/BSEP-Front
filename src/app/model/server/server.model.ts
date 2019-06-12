@@ -1,4 +1,4 @@
-import { ServerType } from './enums/server-type.model';
+import { ServerType } from '../enums/server-type.model';
 
 export interface Server {
     id: number;

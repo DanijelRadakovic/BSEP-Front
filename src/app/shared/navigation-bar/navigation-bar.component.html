@@ -1,17 +1,29 @@
 <nav id="sidebar">
-  <div class="sidebar-header">
-      <h3>Arch Security</h3>
-  </div>
+    <div class="sidebar-header">
+        <h3>Arch PKI</h3>
+    </div>
 
-  <ul class="list-unstyled components">
-      <li>
-          <a [routerLink]="['/server']">Servers</a>
-      </li>
-  </ul>
+    <ul class="list-unstyled components">
+        <li>
+            <a [routerLink]="['/server']">Servers</a>
+        </li>
+        <li>
+            <a [routerLink]="['/gen']">Generator</a>
+        </li>
+        <li>
+            <a [routerLink]="['/cer']">Certificates</a>
+        </li>
+        <li>
+            <a [routerLink]="['/trust']">Trust storage</a>
+        </li>
+        <li>
+            <a [routerLink]="['/dist']">Distribution</a>
+        </li>
+    </ul>
 
-  <ul class="list-unstyled CTAs">
-      <!-- <li *ngIf="userService.isAuthenticated()">
-          <a [routerLink]="" class="logout" (click)="logout()">Log Out</a>
-      </li> -->
-  </ul>
+    <ul class="list-unstyled CTAs">
+        <!-- <li *ngIf="userService.isAuthenticated()">
+                <a [routerLink]="" class="logout" (click)="logout()">Log Out</a>
+            </li> -->
+    </ul>
 </nav>

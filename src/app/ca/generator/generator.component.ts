@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CertificateService } from 'src/app/core/service/certificate.service';
-import { Certificate } from 'src/model/certificate.model';
-import { CertificateRequest, SubjectDN } from 'src/model/generator.model';
+import { Certificate } from 'src/app/model/cert/certificate.model';
+import { SubjectDN, CertificateRequest } from 'src/app/model/cert/generator.model';
+
 
 const countries: String[] = [
   'Afghanistan AF', 'Albania AL', 'Algeria DZ', 'American Samoa AS', 'Andorra AD', 'Angola AO', 'Anguilla AI',
@@ -53,13 +52,9 @@ const countries: String[] = [
   templateUrl: './generator.component.html',
   styleUrls: ['./generator.component.css']
 })
-export class GeneratorComponent implements OnInit, OnDestroy {
+export class GeneratorComponent implements OnInit {
 
   public countries: String[];
-  public sub: Subscription;
-  public serverName: String;
-  public serverAddress: String;
-  public serverType: String;
   public showIssuer: boolean;
 
   private certificates: Certificate[];
@@ -67,9 +62,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   public formGroup: FormGroup;
   public isValidFormSubmitted: boolean;
 
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private toastrService: ToastrService,
+  constructor(private toastrService: ToastrService,
     private certificateService: CertificateService) {
     this.countries = countries;
     this.showIssuer = true;
@@ -96,13 +89,6 @@ export class GeneratorComponent implements OnInit, OnDestroy {
       issuer: new FormControl('', [Validators.required]),
     });
 
-    this.sub = this.route
-      .queryParams
-      .subscribe(params => {
-        this.serverName = params['server'] || '';
-        this.serverAddress = params['address'] || '';
-        this.serverType = params['type'] || '';
-      });
 
     this.certificateService.getAllActiveCA().subscribe(
       response => this.certificates = response,
@@ -154,75 +140,71 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-  private get commonName() {
+  get commonName() {
     return this.formGroup.get('commonName');
   }
 
-  private get organization() {
+  get organization() {
     return this.formGroup.get('organization');
   }
 
-  private get organizationUnit() {
+  get organizationUnit() {
     return this.formGroup.get('organizationUnit');
   }
 
-  private get country() {
+  get country() {
     return this.formGroup.get('country');
   }
 
-  private get surname() {
+  get surname() {
     return this.formGroup.get('surname');
   }
 
-  private get givenName() {
+  get givenName() {
     return this.formGroup.get('givenName');
   }
 
-  private get gender() {
+  get gender() {
     return this.formGroup.get('gender');
   }
 
-  private get email() {
+  get email() {
     return this.formGroup.get('email');
   }
 
-  private get placeOfBirth() {
+  get placeOfBirth() {
     return this.formGroup.get('placeOfBirth');
   }
 
-  private get street() {
+  get street() {
     return this.formGroup.get('street');
   }
 
-  private get localityName() {
+  get localityName() {
     return this.formGroup.get('localityName');
   }
 
-  private get postalCode() {
+  get postalCode() {
     return this.formGroup.get('postalCode');
   }
 
-  private get countryOfCitizenship() {
+  get countryOfCitizenship() {
     return this.formGroup.get('countryOfCitizenship');
   }
 
-  private get countryOfResidence() {
+  get countryOfResidence() {
     return this.formGroup.get('countryOfResidence');
   }
 
-  private get uid() {
+  get uid() {
     return this.formGroup.get('uid');
   }
 
-  private get type() {
+  get type() {
     return this.formGroup.get('type');
   }
 
-  private get issuer() {
+  get issuer() {
     return this.formGroup.get('issuer');
   }
 }

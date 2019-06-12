@@ -3,14 +3,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Certificate } from 'src/model/certificate.model';
-import { CertificateRequest } from 'src/model/generator.model';
+import { Certificate } from 'src/app/model/cert/certificate.model';
+import { CertificateRequest } from 'src/app/model/cert/generator.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CertificateService {
 
+  // private url = 'https://localhost:8082/api/cer';
   private url = '/api/cer';
 
   constructor(private http: HttpClient) {

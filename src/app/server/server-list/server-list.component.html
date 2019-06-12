@@ -5,9 +5,10 @@
     <ng-template #serversExist>
       <div class="row card-deck">
 
-        <div *ngFor="let server of servers" class="col-sm-4 mb-3 d-flex align-items-stretch">
-          <app-server-card [id]="server?.id" [name]="server?.name" [address]="server?.address" 
-          [type]="server?.type" (deleteEvent)="delete($event)"></app-server-card>
+        <div *ngFor="let curServer of curServers" class="col-sm-4 mb-3 d-flex align-items-stretch">
+          <app-server-card [id]="curServer?.server?.id" [name]="curServer?.server?.name"
+          [address]="curServer?.server?.address" [type]="curServer?.server?.type" 
+          [current]="curServer?.current" (deleteEvent)="delete($event)"></app-server-card>
         </div>
 
         <div class="col-sm-4 mb-3 d-flex align-items-stretch" (click)="open(content)">

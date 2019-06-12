@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Certificate } from 'src/model/certificate.model';
-import { TrustStorage } from 'src/model/trust-storage.model';
+import { Certificate } from 'src/app/model/cert/certificate.model';
+import { TrustStorage } from 'src/app/model/cert/trust-storage.model';
 
 
 @Injectable({
@@ -12,6 +12,7 @@ import { TrustStorage } from 'src/model/trust-storage.model';
 })
 export class TrustService {
 
+  // private url = 'https://localhost:8082/api/trust';
   private url = '/api/trust';
 
   constructor(private http: HttpClient) {

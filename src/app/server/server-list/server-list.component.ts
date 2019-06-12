@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Server } from 'src/model/server.model';
+
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ServerService } from 'src/app/core/service/server.service';
 import { ToastrService } from 'ngx-toastr';
+import { Server } from 'src/app/model/server/server.model';
 
 @Component({
   selector: 'app-server-list',
@@ -20,6 +21,7 @@ export class ServerListComponent implements OnInit {
 
   public addImage = 'assets/addServer.jpg';
   public servers: Server[];
+  public curServers: any[];
 
   constructor(private modalService: NgbModal,
     private serverService: ServerService,
@@ -30,15 +32,24 @@ export class ServerListComponent implements OnInit {
       name: new FormControl('', [Validators.required,
       Validators.minLength(1), Validators.maxLength(30)]),
       type: new FormControl(null, [Validators.required]),
-      address: new FormControl('', [
-        Validators.pattern('[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}')]),
+      address: new FormControl('', [Validators.required]),
     });
     this.headerName = 'Create Server';
   }
 
   ngOnInit() {
     this.serverService.findAll().subscribe(
-      response => this.servers = response,
+      response => {
+        this.servers = response;
+        this.curServers = [];
+        for (const ser of this.servers) {
+          if (window.location.href .indexOf(ser.address) >= 0 ) {
+            this.curServers.push({server: ser, current: true});
+          } else {
+            this.curServers.push({server: ser, current: false});
+          }
+        }
+      },
       err => this.toastrService.error(err));
 
   }
@@ -48,6 +59,7 @@ export class ServerListComponent implements OnInit {
       (response: string) => {
         this.toastrService.success(response);
         this.servers = this.servers.filter(server => server.id !== id);
+        this.curServers = this.curServers.filter(ser => ser.server.id !== id);
       }, (error: string) => this.toastrService.error(error));
   }
 
@@ -66,6 +78,7 @@ export class ServerListComponent implements OnInit {
       { id: null, name: this.name.value, type: this.type.value, address: this.address.value })
       .subscribe((server: Server) => {
         this.servers.push(server);
+        this.curServers.push({server: server, current: false});
         this.modalForm.close();
         this.toastrService.success('Server is successfully created!');
       }, (error: string) => this.toastrService.error(error));

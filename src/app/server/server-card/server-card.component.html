@@ -6,10 +6,14 @@
     <p class="card-text text-center">Address: {{server.address}}</p>
     <p class="card-text text-center">Type: {{server.type}}</p>
   </div>
-
-  <div class="card-footer text-center">
-    <button class="btn btn-success w-50" (click)="connect(server.address)">Connect</button>
+  
+  <div class="card-footer text-center" *ngIf="!current">
+    <button class="btn btn-success w-50" (click)="connect()">Connect</button>
     <button class="btn btn-danger w-50" (click)="delete(server.id)">Delete</button>
+  </div>
+
+  <div class="card-footer text-center" *ngIf="current">
+    <h5>Current</h5>
   </div>
 
 </div>

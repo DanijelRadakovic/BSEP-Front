@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CaNavBarComponent } from './ca-nav-bar.component';
+import { DistributionComponent } from './distribution.component';
 
-describe('CaNavBarComponent', () => {
-  let component: CaNavBarComponent;
-  let fixture: ComponentFixture<CaNavBarComponent>;
+describe('DistributionComponent', () => {
+  let component: DistributionComponent;
+  let fixture: ComponentFixture<DistributionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CaNavBarComponent ]
+      declarations: [ DistributionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CaNavBarComponent);
+    fixture = TestBed.createComponent(DistributionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

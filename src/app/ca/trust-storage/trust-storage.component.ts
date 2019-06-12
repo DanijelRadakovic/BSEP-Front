@@ -1,42 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TrustService } from 'src/app/core/service/trust.service';
 import { CertificateService } from 'src/app/core/service/certificate.service';
-import { Certificate } from 'src/model/certificate.model';
 import { ToastrService } from 'ngx-toastr';
-import { TrustStorage } from 'src/model/trust-storage.model';
+import { Certificate } from 'src/app/model/cert/certificate.model';
+import { TrustStorage } from 'src/app/model/cert/trust-storage.model';
 
 @Component({
   selector: 'app-trust-storage',
   templateUrl: './trust-storage.component.html',
   styleUrls: ['./trust-storage.component.css']
 })
-export class TrustStorageComponent implements OnInit, OnDestroy {
+export class TrustStorageComponent implements OnInit {
 
-  public sub: Subscription;
-  public serverName: string;
-  public serverAddress: string;
-  public serverType: string;
-
-  private clientCertificates: Certificate[];
-  private certificates: Certificate[];
-  private trustStorage: Certificate[];
-  private availableCerts: Certificate[];
+  public clientCertificates: Certificate[];
+  public certificates: Certificate[];
+  public trustStorage: Certificate[];
+  public availableCerts: Certificate[];
 
   private target: string;
 
   public formGroup: FormGroup;
   public isValidFormSubmitted: boolean;
 
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private trustStoreService: TrustService,
+  constructor(private trustStoreService: TrustService,
     private certificateService: CertificateService,
     private toastrService: ToastrService) {
-
   }
 
   ngOnInit() {
@@ -44,14 +34,6 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
     this.formGroup = new FormGroup({
       cert: new FormControl('', [Validators.required]),
     });
-
-    this.sub = this.route
-      .queryParams
-      .subscribe(params => {
-        this.serverName = params['server'] || '';
-        this.serverAddress = params['address'] || '';
-        this.serverType = params['type'] || '';
-      });
 
     this.certificateService.getAllActiveClients().subscribe(
       response => this.clientCertificates = response,
@@ -72,18 +54,37 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
         } else {
           this.availableCerts = this.certificates.filter(c => !this.trustStorage.includes(c));
         }
-        this.availableCerts.splice(this.availableCerts.findIndex(c => c.serialNumber === serialNumber), 1);
+        for (let index = 0; index < this.availableCerts.length; index++) {
+          const element = this.availableCerts[index];
+          if (serialNumber === element.serialNumber) {
+            this.availableCerts.splice(index, 1);
+            break;
+          }
+        }
       },
       () => {
         this.trustStorage = [];
         this.availableCerts = this.certificates;
-        this.availableCerts.splice(this.availableCerts.findIndex(c => c.serialNumber === serialNumber), 1);
+        for (let index = 0; index < this.availableCerts.length; index++) {
+          const element = this.availableCerts[index];
+          if (serialNumber === element.serialNumber) {
+            this.availableCerts.splice(index, 1);
+            break;
+          }
+        }
       });
   }
 
   removeItem(serialNumber: string) {
     this.availableCerts.push(this.trustStorage.find(c => c.serialNumber === serialNumber));
-    this.trustStorage = this.trustStorage.filter(s => s.serialNumber !== serialNumber);
+    for (let index = 0; index < this.trustStorage.length; index++) {
+      const element = this.trustStorage[index];
+      if (serialNumber === element.serialNumber) {
+        this.trustStorage.splice(index, 1);
+        break;
+      }
+    }
+    // this.trustStorage = this.trustStorage.filter(s => s.serialNumber !== serialNumber);
   }
 
   addItem() {
@@ -111,11 +112,7 @@ export class TrustStorageComponent implements OnInit, OnDestroy {
       err => this.toastrService.error(err));
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-  private get cert() {
+  get cert() {
     return this.formGroup.get('cert');
   }
 

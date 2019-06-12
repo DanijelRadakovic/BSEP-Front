@@ -1,4 +1,4 @@
-import { CerType } from './enums/cer-type.model';
+import { CerType } from '../enums/cer-type.model';
 
 export interface CertificateRequest {
     subjectDN: SubjectDN;

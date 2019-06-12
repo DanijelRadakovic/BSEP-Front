@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { Server } from 'src/model/server.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Server } from 'src/app/model/server/server.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerService {
 
+  // private url = 'https://localhost:8082/api/server';
+  // private url = 'http://localhost:8082/api/server';
   private url = '/api/server';
 
   constructor(private http: HttpClient) {
