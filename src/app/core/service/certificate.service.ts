@@ -12,8 +12,8 @@ import { CertificateRequest } from 'src/app/model/cert/generator.model';
 })
 export class CertificateService {
 
-  // private url = 'https://localhost:8082/api/cer';
-  private url = '/api/cer';
+  private url = 'https://localhost:8085/api/cer';
+  // private url = '/api/cer';
 
   constructor(private http: HttpClient) {
   }

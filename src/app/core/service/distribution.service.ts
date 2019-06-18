@@ -10,8 +10,8 @@ import { Distribution } from 'src/app/model/cert/distribution.model';
 })
 export class DistributionService {
 
-  // private url = 'https://localhost:8082/api/dist';
-  private url = '/api/dist';
+  private url = 'https://localhost:8085/api/dist';
+  // private url = '/api/dist';
 
   constructor(private http: HttpClient) {
   }

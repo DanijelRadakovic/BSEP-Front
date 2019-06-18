@@ -10,9 +10,9 @@ import { Server } from 'src/app/model/server/server.model';
 })
 export class ServerService {
 
-  // private url = 'https://localhost:8082/api/server';
+  private url = 'https://localhost:8085/api/server';
   // private url = 'http://localhost:8082/api/server';
-  private url = '/api/server';
+  // private url = '/api/server';
 
   constructor(private http: HttpClient) {
   }
